@@ -9,10 +9,13 @@
 #include <UI/EndScreen.h>
 #include <algorithm> 
 #include <Sounds.h>
+#include <Objects/MeshObject.h>
+#include <Engine/Subsystem/Scene.h>
 
 Player* Player::CurrentPlayer = nullptr;
 float Player::GameTime = INFINITY;
 int Player::CurrentDay = 0;
+bool FirstFrame = false;
 
 void Player::Begin()
 {
@@ -24,6 +27,8 @@ void Player::Begin()
 	Attach(Movement);
 	Movement->CollideStatic = false;
 
+	Attach(HeldMesh);
+
 	CurrentPlayer = this;
 
 	UICanvas::CreateNewCanvas<GameUI>();
@@ -33,8 +38,11 @@ void Player::Begin()
 	{
 		GameUI::CurrentUI->DisplayMessage("Time limit is disabled for the day", 1);
 	}
+	FirstFrame = true;
 #endif
 }
+
+bool EscDown = false;
 
 void Player::Update()
 {
@@ -42,11 +50,56 @@ void Player::Update()
 	return;
 #endif
 
+	if (CurrentDay == 5 && FirstFrame)
+	{
+		auto Obj = Objects::GetAllObjectsWithID(MeshObject::GetID());
+
+		for (auto& i : Obj)
+		{
+			if (i->Name == "Skybox")
+			{
+				auto m = static_cast<MeshObject*>(i);
+				m->MaterialNames.clear();
+				m->LoadFromFile("GameEndSky");
+			}
+		}
+	}
+	FirstFrame = false;
+
+	Input::CursorVisible = false;
 	if (!Active)
 	{
 		HoveredObject = nullptr;
 		DropItem();
 		return;
+	}
+
+
+	if (Input::IsKeyDown(Input::Key::ESCAPE))
+	{
+		if (!EscDown)
+		{
+			if (Performance::TimeMultiplier == 0)
+			{
+				Performance::TimeMultiplier = 1;
+				GameUI::CurrentUI->DisplayMessage("Game resumed.", 1);
+			}
+			else
+			{
+				Performance::TimeMultiplier = 0;
+				GameUI::CurrentUI->DisplayMessage("Game paused. Press X to open the main menu", 1);
+			}
+		}
+		EscDown = true;
+	}
+	else
+	{
+		EscDown = false;
+	}
+
+	if (Input::IsKeyDown(Input::Key::x) && Performance::TimeMultiplier == 0)
+	{
+		Scene::LoadNewScene("Menu");
 	}
 
 	if (CurrentDay != 0)
@@ -67,6 +120,11 @@ void Player::Update()
 			Active = false;
 			UICanvas::CreateNewCanvas<EndScreen>();
 		}
+	}
+
+	if (Performance::TimeMultiplier == 0)
+	{
+		return;
 	}
 
 	UpdateInput();
@@ -93,6 +151,15 @@ void Player::Update()
 	{
 		DropItem();
 	}
+
+	if ((!HeldMesh->GetModel() || HeldMesh->GetModel()->Meshes.empty()) && HeldObjectTypeID)
+	{
+		HeldMesh->Load(HeldMeshName);
+		HeldMesh->RelativeTransform.Scale = HeldScale;
+	}
+	HeldMesh->RelativeTransform.Position = Vector3::GetForwardVector(PlayerCamera->RelativeTransform.Rotation) * 2
+		+ Vector3::GetRightVector(PlayerCamera->RelativeTransform.Rotation);
+	HeldMesh->RelativeTransform.Rotation.Y = -PlayerCamera->RelativeTransform.Rotation.Y;
 }
 
 void Player::Destroy()
@@ -146,4 +213,10 @@ void Player::DropItem()
 	Obj->Body->SetAngularVelocity(Vector3(Random::GetRandomFloat(-400, 400), Random::GetRandomFloat(-400, 400), Random::GetRandomFloat(-400, 400)));
 	HeldObjectTypeID = 0;
 	Sound::PlaySound2D(Sounds::SoundBuffers["Throw"], 1, 0.5f);
+	ClearHeldItem();
+}
+
+void Player::ClearHeldItem()
+{
+	HeldMesh->Load(ModelGenerator::ModelData());
 }

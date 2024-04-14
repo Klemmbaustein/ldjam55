@@ -4,6 +4,7 @@
 #include <UI/EndScreen.h>
 #include <Sounds.h>
 #include <Engine/EngineRandom.h>
+#include <Engine/Log.h>
 Customer* Customer::Current = nullptr;
 
 void Customer::Begin()
@@ -43,12 +44,13 @@ void Customer::OnInteract()
 	if (Player::CurrentPlayer->HeldObjectTypeID && Player::CurrentPlayer->HeldName == RequiredItem)
 	{
 		Player::CurrentPlayer->HeldObjectTypeID = 0;
-		Timer = -8;
+		Timer = -8.0f;
 		Particle->SetActive(true);
 		Particle->Reset();
 		Collider->SetActive(false);
 		Mesh->SetVisibility(false);
 		Sound::PlaySound2D(Sounds::SoundBuffers["Customer"]);
+		Player::CurrentPlayer->ClearHeldItem();
 	}
 	else
 	{
@@ -58,6 +60,10 @@ void Customer::OnInteract()
 
 void Customer::Update()
 {
+#if EDITOR
+	return;
+#endif
+
 	if (Player::CurrentPlayer->CurrentDay == 0)
 	{
 		return;
@@ -96,17 +102,22 @@ void Customer::Update()
 			Particle->Reset();
 			Collider->SetActive(true);
 			Mesh->SetVisibility(true);
-			Timer = 22;
-			switch (Random::GetRandomInt(0, 3))
+			Timer = 20;
+			int val = Random::GetRandomInt(0, 3);
+			switch (val)
 			{
 			case 0:
 				RequiredItem = "Magazine";
 				DisplayName = "a Magazine";
 				break;
-			default:
 			case 1:
+			default:
 				RequiredItem = "Milk";
 				DisplayName = "Milk";
+				break;
+			case 2:
+				RequiredItem = "Cat Food";
+				DisplayName = "Cat Food";
 				break;
 			}
 		}

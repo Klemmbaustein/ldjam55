@@ -5,6 +5,7 @@
 #include <Objects/Pickups/Milk.h>
 #include <Objects/Pickups/Magazine.h>
 #include <Sounds.h>
+#include <Objects/Pickups/CatFood.h>
 
 void ItemDispenser::Begin()
 {
@@ -25,10 +26,20 @@ void ItemDispenser::OnInteract()
 	case 0:
 		Player::CurrentPlayer->HeldObjectTypeID = Magazine::GetID();
 		Player::CurrentPlayer->HeldName = "Magazine";
+		Player::CurrentPlayer->HeldMeshName = "Magazine";
+		Player::CurrentPlayer->HeldScale = 0.25f;
 		break;
 	case 1:
 		Player::CurrentPlayer->HeldObjectTypeID = Milk::GetID();
 		Player::CurrentPlayer->HeldName = "Milk";
+		Player::CurrentPlayer->HeldMeshName = "Milk";
+		Player::CurrentPlayer->HeldScale = 0.25f;
+		break;
+	case 2:
+		Player::CurrentPlayer->HeldObjectTypeID = CatFood::GetID();
+		Player::CurrentPlayer->HeldName = "Cat Food";
+		Player::CurrentPlayer->HeldMeshName = "AnimalFood";
+		Player::CurrentPlayer->HeldScale = 0.15f;
 		break;
 	default:
 		break;
@@ -54,6 +65,10 @@ void ItemDispenser::OnPropertySet()
 	case 1:
 		m.LoadModelFromFile("Fridge");
 		Name = "Milk";
+		break;
+	case 2:
+		m.LoadModelFromFile("AnimalFoodStand");
+		Name = "Cat Food";
 		break;
 	default:
 		break;

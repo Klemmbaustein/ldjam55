@@ -1,0 +1,17 @@
+#pragma once
+#include <UI/Default/UICanvas.h>
+#include <UI/UIText.h>
+#include <UI/UITextField.h>
+
+class MenuUI : public UICanvas
+{
+public:
+	UITextField* VolumeField = nullptr;
+	TextRenderer* Font = nullptr;
+	MenuUI();
+	~MenuUI();
+
+	void SaveSettings();
+
+	void OnButtonClicked(int Index) override;
+};

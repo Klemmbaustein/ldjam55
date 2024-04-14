@@ -9,4 +9,9 @@ public:
 	DAYMESH_GENERATED("Game");
 
 	void Begin() override;
+
+	void OnPropertySet() override;
+
+	std::string ModelFile;
+	int StartDay = 0;
 };

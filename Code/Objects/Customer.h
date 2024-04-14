@@ -17,7 +17,7 @@ public:
 	PhysicsComponent* Collider = nullptr;
 	ParticleComponent* Particle = nullptr;
 
-	float Timer = -5;
+	float Timer = -5.0f;
 
 	void OnInteract() override;
 	void Update() override;
