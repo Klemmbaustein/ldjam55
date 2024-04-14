@@ -3,6 +3,7 @@
 #include <Objects/WorldObject.h>
 #include <Objects/Components/MoveComponent.h>
 #include <Objects/Components/CameraComponent.h>
+#include <Objects/Components/MeshComponent.h>
 #include <Interfaces/Interactable.h>
 
 class Player : public WorldObject
@@ -10,6 +11,7 @@ class Player : public WorldObject
 public:
 	bool Active = true;
 
+	MeshComponent* HeldMesh = new MeshComponent();
 	CameraComponent* PlayerCamera = new CameraComponent();
 	MoveComponent* Movement = new MoveComponent();
 
@@ -17,6 +19,8 @@ public:
 
 	uint32_t HeldObjectTypeID = 0;
 	std::string HeldName = "";
+	std::string HeldMeshName;
+	Vector3 HeldScale;
 
 	PLAYER_GENERATED("");
 
@@ -26,6 +30,7 @@ public:
 
 	void UpdateInput();
 	void DropItem();
+	void ClearHeldItem();
 
 	static Player* CurrentPlayer;
 

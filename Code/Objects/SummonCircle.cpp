@@ -122,4 +122,5 @@ void SummonCircle::OnInteract()
 	Player::CurrentPlayer->HeldObjectTypeID = 0;
 	CameraShake::PlayDefaultCameraShake(0.6f);
 	Sound::PlaySound2D(Sounds::SoundBuffers["Hit2"]);
+	Player::CurrentPlayer->ClearHeldItem();
 }

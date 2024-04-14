@@ -11,6 +11,8 @@ public:
 	PhysicsComponent* Body = new PhysicsComponent();
 	MeshComponent* ObjectMesh = new MeshComponent();
 	Vector3 MeshOffset;
+	std::string MeshName;
+	Vector3 MeshScale;
 	std::string PickupName;
 	PHYSICSOBJECT_GENERATED("Game");
 

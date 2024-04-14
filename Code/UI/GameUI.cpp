@@ -206,8 +206,6 @@ void GameUI::DisplayMessage(std::string Message, Vector3 Color)
 
 	MessageBox->AddChild(new UIText(0.75f, Color, Message, GameFont));
 	MessageBox->GetParent()->RedrawElement();
-	//if (Player::CurrentDay == 0)
-	//UICanvas::CreateNewCanvas<EndScreen>();
 }
 
 void GameUI::GenerateTaskList()
@@ -218,6 +216,12 @@ void GameUI::GenerateTaskList()
 	{
 		AddTask("Sacrifice " + SummonCircle::Current->RequiredItem, Vector3(1, 0.2f, 1));
 	}
+
+	if (Player::CurrentDay != 0 && Player::GameTime > 0)
+	{
+		AddTask("Serve customers", Vector3(0.2f, 1.0f, 0.1f));
+	}
+
 	if (!Dirt::CleanedAll)
 	{
 		AddTask("Clean shop", 1);
@@ -226,11 +230,6 @@ void GameUI::GenerateTaskList()
 	if (TrashCan::TrashExists)
 	{
 		AddTask("Throw away trash", 1);
-	}
-
-	if (Player::CurrentDay != 0 && Player::GameTime > 0)
-	{
-		AddTask("Serve customers", 1);
 	}
 
 	if (TaskList->GetChildren().empty() && Player::CurrentPlayer->Active)

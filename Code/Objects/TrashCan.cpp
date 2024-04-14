@@ -35,4 +35,5 @@ void TrashCan::OnInteract()
 	{
 		GameUI::TaskComplete();
 	}
+	Player::CurrentPlayer->ClearHeldItem();
 }

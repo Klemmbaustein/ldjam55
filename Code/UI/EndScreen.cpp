@@ -6,6 +6,7 @@
 #include <Engine/Input.h>
 #include <Objects/TrashCan.h>
 #include <cmath>
+#include <Objects/Dirt.h>
 
 EndScreen::EndScreen()
 {
@@ -32,6 +33,7 @@ void EndScreen::Tick()
 			Player::CurrentDay++;
 		}
 		TrashCan::TrashExists = true;
+		Dirt::CleanedAll = false;
 		Scene::LoadNewScene("MainScene");
 	}
 }

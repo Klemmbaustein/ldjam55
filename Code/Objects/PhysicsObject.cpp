@@ -30,11 +30,16 @@ void PhysicsObject::OnInteract()
 	Player::CurrentPlayer->DropItem();
 	Player::CurrentPlayer->HeldName = PickupName;
 	Player::CurrentPlayer->HeldObjectTypeID = TypeID;
+	Player::CurrentPlayer->HeldMeshName = MeshName;
+	Player::CurrentPlayer->HeldScale = MeshScale;
 	Objects::DestroyObject(this);
 }
 
 void PhysicsObject::CreateObject(std::string MeshName, Transform ColliderTransform)
 {
+	this->MeshName = MeshName;
+	MeshScale = ColliderTransform.Scale;
+
 	Attach(ObjectMesh);
 	ObjectMesh->Load(MeshName);
 	ObjectMesh->RelativeTransform = ColliderTransform;
