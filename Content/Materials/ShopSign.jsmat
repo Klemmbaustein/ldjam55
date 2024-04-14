@@ -1,0 +1,16 @@
+string VertexShader = "basic.vert"
+string FragmentShader = "basic.frag"
+bool UseShadowCutout = 0
+bool IsTranslucent = 0
+texture u_texture = 
+{
+	string File = "ShopSign"
+	int Filtering = 1
+	int Wrap = 0
+}
+bool u_useTexture = 1
+vector3 u_diffuse = <1.500000 1.500000 1.500000>
+float u_specularSize = 0
+float u_specularStrength = 0
+vector3 u_emissive = < 0 0 0 >
+bool u_reverseNormal = 1

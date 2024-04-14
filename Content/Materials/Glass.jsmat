@@ -1,0 +1,6 @@
+string VertexShader = "basic.vert"
+string FragmentShader = "glass.frag"
+bool UseShadowCutout = 1
+bool IsTranslucent = 1
+vector3 u_color = <0.162368 0.179011 0.195268>
+float u_opacity = 0.25

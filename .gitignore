@@ -1,0 +1,14 @@
+/bin
+/.vs
+/.vscode
+x64
+Build
+/*.bat
+/*.sh
+/Logs
+/*.dll
+/*.sln
+*.vcxproj
+*.user
+obj
+GeneratedIncludes/GENERATED/*

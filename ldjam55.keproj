@@ -1,0 +1,6 @@
+string Run_from_editor:Launch_arguments = ""
+bool Run_from_editor:Launch_scene_that_is_currently_loaded_in_editor = 1
+bool Run_from_editor:Save_current_scene_before_launch = 1
+bool Networking:Start_server_on_launch = 0
+int Networking:Number_of_clients = 1
+bool C#:Use_C#_in_project_(Requires_restart) = 0
