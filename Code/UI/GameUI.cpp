@@ -155,7 +155,7 @@ void GameUI::Tick()
 		}
 		HoldText->SetText("");
 	}
-	if (Player::CurrentDay != 0 && Customer::Current)
+	if (Player::CurrentDay != 0)
 	{
 		std::string Seconds = std::to_string(int(Player::GameTime) % 60);
 		if (Seconds.size() == 1)
@@ -170,18 +170,31 @@ void GameUI::Tick()
 		}
 		DayText->SetText(str);
 
-		CustomerText->SetText("Customer");
-
-		float Percentage = Customer::Current->Timer / 22;
-		CustomerBar->SetMinSize(Vector2(Percentage / 2.25f, 0.075f));
-		CustomerBar->SetColor(Vector3::Lerp(Vector3(1, 0, 0), Vector3(0, 1, 0), Percentage));
-
-		std::string CustomerString = Customer::Current->Timer > 0 ? "Customer waiting" : "No customer";
-		if (CustomerText->GetText() != CustomerString)
+		if (Customer::Current)
 		{
-			CustomerText->GetParent()->RedrawElement();
+			CustomerText->SetText("Customer");
+
+			float Percentage = Customer::Current->Timer / 22;
+			CustomerBar->SetMinSize(Vector2(Percentage / 2.25f, 0.075f));
+			CustomerBar->SetColor(Vector3::Lerp(Vector3(1, 0, 0), Vector3(0, 1, 0), Percentage));
+
+			std::string CustomerString = Customer::Current->Timer > 0 ? "Customer waiting" : "No customer";
+			if (CustomerText->GetText() != CustomerString)
+			{
+				CustomerText->GetParent()->RedrawElement();
+			}
+			CustomerText->SetText(CustomerString);
 		}
-		CustomerText->SetText(CustomerString);
+		else if (CustomerText)
+		{
+			if (CustomerText->GetText() != "Customer (Dead)")
+			{
+				CustomerText->SetText("Customer (Dead)");
+			}
+			CustomerText->GetParent()->RedrawElement();
+			CustomerBar->SetMinSize(Vector2(1 / 2.25f, 0.075f));
+			CustomerBar->SetColor(0.5f);
+		}
 	}
 	else
 	{

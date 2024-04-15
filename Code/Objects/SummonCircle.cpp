@@ -4,6 +4,7 @@
 #include <Objects/Components/PhysicsComponent.h>
 #include <Objects/Player.h>
 #include <UI/GameUI.h>
+#include <UI/EndScreen.h>
 #include <Rendering/Camera/CameraShake.h>
 #include <Sounds.h>
 SummonCircle* SummonCircle::Current = nullptr;
@@ -51,13 +52,16 @@ void SummonCircle::Begin()
 			"Magazine",
 			"Wood Plank",
 			"Barrel",
+			"Milk",
 		};
 	case 3:
 		QuestItems =
 		{
 			"Milk",
-			"Wood Plank",
+			"Magazine",
 			"Drill",
+			"Barrel",
+			"Milk",
 		};
 		break;
 	case 4:
@@ -66,6 +70,8 @@ void SummonCircle::Begin()
 			"Magazine",
 			"Wood Plank",
 			"Drill",
+			"Magazine",
+			"Milk",
 			"Barrel",
 		};
 		break;
@@ -73,10 +79,11 @@ void SummonCircle::Begin()
 		QuestItems =
 		{
 			"Magazine",
-			"Milk",
-			"Wood Plank",
-			"Drill",
 			"Barrel",
+			"Wood Plank",
+			"Magazine",
+			"Drill",
+			"Human",
 		};
 		break;
 	default:
@@ -123,4 +130,9 @@ void SummonCircle::OnInteract()
 	CameraShake::PlayDefaultCameraShake(0.6f);
 	Sound::PlaySound2D(Sounds::SoundBuffers["Hit2"]);
 	Player::CurrentPlayer->ClearHeldItem();
+	if (Player::CurrentDay > 0)
+	{
+		GameUI::CurrentUI->DisplayMessage("+1 second", Vector3(1, 0.2f, 1));
+		Player::GameTime += 1;
+	}
 }

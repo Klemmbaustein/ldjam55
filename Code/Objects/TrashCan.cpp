@@ -7,6 +7,7 @@ bool TrashCan::TrashExists = true;
 
 void TrashCan::Begin()
 {
+	TrashExists = true;
 	auto TrashMesh = new MeshComponent();
 	Attach(TrashMesh);
 	TrashMesh->Load("TrashCan");

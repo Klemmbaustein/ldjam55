@@ -5,6 +5,8 @@
 #include <Sounds.h>
 #include <Engine/EngineRandom.h>
 #include <Engine/Log.h>
+#include <Objects/SummonCircle.h>
+#include <Objects/Pickups/Human.h>
 Customer* Customer::Current = nullptr;
 
 void Customer::Begin()
@@ -41,6 +43,17 @@ void Customer::Destroy()
 
 void Customer::OnInteract()
 {
+	if (SummonCircle::Current && SummonCircle::Current->RequiredItem == "Human")
+	{
+		Player::CurrentPlayer->DropItem();
+		Player::CurrentPlayer->HeldMeshName = "CarriedHuman";
+		Player::CurrentPlayer->HeldName = "Human";
+		Player::CurrentPlayer->HeldObjectTypeID = Human::GetID();
+		Player::CurrentPlayer->HeldScale = 0.75f;
+		Objects::DestroyObject(this);
+		return;
+	}
+
 	if (Player::CurrentPlayer->HeldObjectTypeID && Player::CurrentPlayer->HeldName == RequiredItem)
 	{
 		Player::CurrentPlayer->HeldObjectTypeID = 0;
@@ -80,6 +93,11 @@ void Customer::Update()
 	else
 	{
 		InteractString = "Talk";
+	}
+
+	if (SummonCircle::Current && SummonCircle::Current->RequiredItem == "Human")
+	{
+		InteractString = "Pick up Human";
 	}
 
 	if (Timer > 0)

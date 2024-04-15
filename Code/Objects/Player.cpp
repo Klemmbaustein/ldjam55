@@ -11,6 +11,8 @@
 #include <Sounds.h>
 #include <Objects/MeshObject.h>
 #include <Engine/Subsystem/Scene.h>
+#include "Customer.h"
+#include "TrashCan.h"
 
 Player* Player::CurrentPlayer = nullptr;
 float Player::GameTime = INFINITY;
@@ -111,6 +113,10 @@ void Player::Update()
 
 		if (GameTime > 0)
 		{
+			if (!Customer::Current && !TrashCan::TrashExists)
+			{
+				GameTime -= Performance::DeltaTime * 4;
+			}
 			GameTime -= Performance::DeltaTime;
 		}
 		if (GameTime <= 0)
@@ -147,7 +153,7 @@ void Player::Update()
 		HoveredObject = nullptr;
 	}
 
-	if (Input::IsRMBClicked)
+	if (Input::IsRMBClicked && HeldName != "Human")
 	{
 		DropItem();
 	}
@@ -157,7 +163,7 @@ void Player::Update()
 		HeldMesh->Load(HeldMeshName);
 		HeldMesh->RelativeTransform.Scale = HeldScale;
 	}
-	HeldMesh->RelativeTransform.Position = Vector3::GetForwardVector(PlayerCamera->RelativeTransform.Rotation) * 2
+	HeldMesh->RelativeTransform.Position = Vector3::GetForwardVector(PlayerCamera->RelativeTransform.Rotation) * 1.5f
 		+ Vector3::GetRightVector(PlayerCamera->RelativeTransform.Rotation);
 	HeldMesh->RelativeTransform.Rotation.Y = -PlayerCamera->RelativeTransform.Rotation.Y;
 }

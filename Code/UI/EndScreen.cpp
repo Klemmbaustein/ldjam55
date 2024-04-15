@@ -30,6 +30,11 @@ void EndScreen::Tick()
 	{
 		if (!GameUI::HasTasks)
 		{
+			if (Player::CurrentDay == 5)
+			{
+				Scene::LoadNewScene("Menu");
+				return;
+			}
 			Player::CurrentDay++;
 		}
 		TrashCan::TrashExists = true;
@@ -50,9 +55,22 @@ void EndScreen::GenerateScreen()
 			->SetPadding(0.05f));
 		return;
 	}
+
+	if (Player::CurrentDay == 5)
+	{
+		TextBox->AddChild((new UIText(1.0f, 0.7f, "You were healed from your sickness for unknown reasons.", GameUI::GameFont))
+			->SetPadding(0.05f));
+		TextBox->AddChild((new UIText(1.0f, 0.7f, "However you feel like somthing has changed for the worse after your rituals.", GameUI::GameFont))
+			->SetPadding(0.05f));
+		TextBox->AddChild((new UIText(0.75f, 0.6f, "Left mouse button to continue", GameUI::GameFont))
+			->SetPadding(0.05f));
+
+		return;
+	}
+
 	TextBox->AddChild((new UIText(1.5f, 0.75f, GameUI::GetDayString(Player::CurrentDay) + " completed", GameUI::GameFont))
 		->SetPadding(0.05f));
-	TextBox->AddChild((new UIText(0.75f, 0.6f, "Finished all task in time", GameUI::GameFont))
+	TextBox->AddChild((new UIText(0.75f, 0.6f, "Finished all tasks in time", GameUI::GameFont))
 		->SetPadding(0.05f));
 	TextBox->AddChild((new UIText(1.5f, std::vector{ TextSegment("Next day: ", 0.75f), TextSegment(GameUI::GetDayString(Player::CurrentDay + 1), 1) }, GameUI::GameFont))
 		->SetPadding(0.05f));
