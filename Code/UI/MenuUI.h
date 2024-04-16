@@ -7,6 +7,7 @@ class MenuUI : public UICanvas
 {
 public:
 	UIBox* Boxes[3];
+	UIText* GraphicsText = nullptr;
 	UITextField* VolumeField = nullptr;
 	TextRenderer* Font = nullptr;
 	MenuUI();
