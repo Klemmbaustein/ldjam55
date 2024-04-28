@@ -102,7 +102,7 @@ void Customer::Update()
 
 	if (Timer > 0)
 	{
-		Timer -= Performance::DeltaTime;
+		Timer -= Stats::DeltaTime;
 		if (Timer <= 0)
 		{
 			GameUI::CurrentUI->DisplayMessage("Failed task: Serve customers", Vector3(1, 0, 0));
@@ -113,7 +113,7 @@ void Customer::Update()
 	}
 	else if (Timer < 0)
 	{
-		Timer += Performance::DeltaTime;
+		Timer += Stats::DeltaTime;
 		if (Timer >= 0)
 		{
 			Particle->SetActive(true);

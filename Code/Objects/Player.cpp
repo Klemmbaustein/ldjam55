@@ -81,14 +81,14 @@ void Player::Update()
 	{
 		if (!EscDown)
 		{
-			if (Performance::TimeMultiplier == 0)
+			if (Stats::TimeMultiplier == 0)
 			{
-				Performance::TimeMultiplier = 1;
+				Stats::TimeMultiplier = 1;
 				GameUI::CurrentUI->DisplayMessage("Game resumed.", 1);
 			}
 			else
 			{
-				Performance::TimeMultiplier = 0;
+				Stats::TimeMultiplier = 0;
 				GameUI::CurrentUI->DisplayMessage("Game paused. Press X to open the main menu", 1);
 			}
 		}
@@ -99,14 +99,14 @@ void Player::Update()
 		EscDown = false;
 	}
 
-	if (Input::IsKeyDown(Input::Key::x) && Performance::TimeMultiplier == 0)
+	if (Input::IsKeyDown(Input::Key::x) && Stats::TimeMultiplier == 0)
 	{
 		Scene::LoadNewScene("Menu");
 	}
 
 	if (CurrentDay != 0)
 	{
-		if (GameTime > 20 && GameTime - Performance::DeltaTime <= 20)
+		if (GameTime > 20 && GameTime - Stats::DeltaTime <= 20)
 		{
 			GameUI::CurrentUI->DisplayMessage("20 seconds remaining!", Vector3(1, 0, 0));
 		}
@@ -115,9 +115,9 @@ void Player::Update()
 		{
 			if (!Customer::Current && !TrashCan::TrashExists)
 			{
-				GameTime -= Performance::DeltaTime * 4;
+				GameTime -= Stats::DeltaTime * 4;
 			}
-			GameTime -= Performance::DeltaTime;
+			GameTime -= Stats::DeltaTime;
 		}
 		if (GameTime <= 0)
 		{
@@ -128,7 +128,7 @@ void Player::Update()
 		}
 	}
 
-	if (Performance::TimeMultiplier == 0)
+	if (Stats::TimeMultiplier == 0)
 	{
 		return;
 	}

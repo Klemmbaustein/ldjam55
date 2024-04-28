@@ -203,7 +203,7 @@ void GameUI::Tick()
 
 	if (MessageTimer > 0)
 	{
-		MessageTimer -= Performance::DeltaTime;
+		MessageTimer -= Stats::DeltaTime;
 		if (MessageTimer <= 0)
 		{
 			MessageBox->DeleteChildren();

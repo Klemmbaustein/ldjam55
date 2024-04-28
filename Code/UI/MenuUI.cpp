@@ -11,7 +11,7 @@ bool FastGraphics = false;
 
 MenuUI::MenuUI()
 {
-	Performance::TimeMultiplier = 1;
+	Stats::TimeMultiplier = 1;
 	Font = new TextRenderer("Font.ttf");
 	
 	Boxes[2] = (new UIBox(UIBox::Orientation::Vertical, Vector2(-0.9f, 0)))

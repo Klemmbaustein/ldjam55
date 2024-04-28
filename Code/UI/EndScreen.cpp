@@ -20,7 +20,7 @@ void EndScreen::Tick()
 	UIBox::RedrawUI();
 	if (Time < 4)
 	{
-		Time += Performance::DeltaTime;
+		Time += Stats::DeltaTime;
 		if (Time >= 4)
 		{
 			GenerateScreen();
