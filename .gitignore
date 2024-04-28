@@ -12,3 +12,4 @@ Build
 *.user
 obj
 GeneratedIncludes/GENERATED/*
+/GameBuild
