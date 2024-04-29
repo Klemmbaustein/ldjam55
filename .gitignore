@@ -10,6 +10,8 @@ Build
 /*.sln
 *.vcxproj
 *.user
+GameBuild/
 obj
 GeneratedIncludes/GENERATED/*
-/GameBuild
+Scripts/CSharpAssembly.csproj
+*.kbld
