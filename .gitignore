@@ -2,7 +2,6 @@
 /.vs
 /.vscode
 x64
-Build
 /*.bat
 /*.sh
 /Logs

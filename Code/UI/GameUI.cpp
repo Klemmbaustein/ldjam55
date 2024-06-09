@@ -55,9 +55,9 @@ GameUI::GameUI()
 		->SetMinSize(2)
 		->SetVerticalAlign(UIBox::Align::Centered)
 		->SetHorizontalAlign(UIBox::Align::Centered)
-		->AddChild((new UIBackground(UIBox::Orientation::Horizontal, 0, 1, 0.1f))
+		->AddChild((new UIBackground(UIBox::Orientation::Horizontal, 0, 1, 0.1))
 			->SetUseTexture(true, "Crosshair")
-			->SetSizeMode(UIBox::SizeMode::PixelRelative));
+			->SetSizeMode(UIBox::SizeMode::AspectRelative));
 	(new UIBox(UIBox::Orientation::Horizontal, Vector2(-1, -0.2f)))
 		->SetVerticalAlign(UIBox::Align::Centered)
 		->SetHorizontalAlign(UIBox::Align::Centered)
